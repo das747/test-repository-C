@@ -11,13 +11,13 @@ abstract class GitHubClientBase implements GitHubClient {
     protected GitHubService service;
     protected String repoOwner;
     protected String repoName;
-    protected String token;
+    protected String authorisation;
 
     GitHubClientBase(GitHubService service, String repoOwner, String repoName, String token) {
         this.service = service;
         this.repoOwner = repoOwner;
         this.repoName = repoName;
-        this.token = token;
+        this.authorisation = token == null ? null : "Bearer " + token;
     }
 
 
@@ -26,7 +26,7 @@ abstract class GitHubClientBase implements GitHubClient {
         if (response.isSuccessful() && response.body() != null) {
             return response.body();
         } else {
-            throw new RuntimeException("Failure: " + response);
+            throw new RuntimeException("Failure: " + response.code());
         }
     }
 
