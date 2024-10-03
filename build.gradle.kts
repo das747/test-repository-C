@@ -11,15 +11,16 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.testng:testng:7.9.0")
+    testImplementation("org.mockito:mockito-core:3.+")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     compileOnly("org.jetbrains:annotations:25.0.0")
+    testCompileOnly("org.jetbrains:annotations:25.0.0")
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useTestNG()
 }
 
 application {

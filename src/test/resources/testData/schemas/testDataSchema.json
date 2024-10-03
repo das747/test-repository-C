@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "branches": {
+      "type": "object",
+      "properties": {
+        "branchA": {
+          "type": "string"
+        },
+        "branchB": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "branchA",
+        "branchB"
+      ]
+    },
+    "commits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sha": {
+            "type": "string",
+            "description": "The SHA of the commit"
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sha": {
+                  "type": "string",
+                  "description": "The SHA of the parent commit"
+                }
+              },
+              "required": [
+                "sha"
+              ]
+            },
+            "description": "The parent commits of this commit"
+          },
+          "commit": {
+            "type": "object",
+            "properties": {
+              "author": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The date of the commit"
+                  }
+                },
+                "required": [
+                  "date"
+                ]
+              }
+            },
+            "required": [
+              "author"
+            ]
+          }
+        },
+        "required": [
+          "sha",
+          "parents",
+          "commit"
+        ]
+      }
+    },
+    "solution": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "The SHAs of last common commits for branch_A and branch_B"
+      }
+    }
+  },
+  "required": [
+    "branches",
+    "commits",
+    "solution"
+  ]
+}
