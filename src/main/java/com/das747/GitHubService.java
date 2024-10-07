@@ -16,7 +16,7 @@ public interface GitHubService {
         @Path("owner") String owner,
         @Path("repo") String repo,
         @Path("branch") String branch,
-        @Header("Authorisation") String authorisation
+        @Header("Authorization") String authorisation
     );
 
     @Headers("Accept: application/vnd.github+json")
@@ -25,7 +25,7 @@ public interface GitHubService {
         @Path("owner") String owner,
         @Path("repo") String repo,
         @Query("sha") String sha,
-        @Header("Authorisation") String authorisation
+        @Header("Authorization") String authorisation
     );
 
 }

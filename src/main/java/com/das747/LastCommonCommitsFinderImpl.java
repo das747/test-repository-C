@@ -15,8 +15,13 @@ import java.util.Queue;
 import java.util.Set;
 
 
-public class LastCommonCommitsFinderImpl implements LastCommonCommitsFinder {
-    GitHubClient client;
+public final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinder {
+
+    private final GitHubClient client;
+    private final Queue<Commit> queue = new PriorityQueue<>(
+        Comparator.comparing((Commit c) -> c.commit.author.date).reversed());
+    private final Map<String, CommitColor> colors = new HashMap<>();
+    private final Map<CommitColor, Integer> queuedColorsCount = new HashMap<>();
 
     LastCommonCommitsFinderImpl(GitHubClient client) {
         this.client = client;
@@ -29,52 +34,66 @@ public class LastCommonCommitsFinderImpl implements LastCommonCommitsFinder {
         UNASSIGNED
     }
 
+    private CommitColor getColor(String sha) {
+        return colors.getOrDefault(sha, UNASSIGNED);
+    }
+
+    private Commit dequeueCommit() {
+        var commit = queue.remove();
+        queuedColorsCount.computeIfPresent(getColor(commit.sha), (c, n) -> n - 1);
+        return commit;
+    }
+
+    private void enqueueCommit(String sha, CommitColor color) throws IOException {
+        queue.add(client.getCommit(sha));
+        changeColor(sha, color);
+    }
+
+    private void changeColor(String sha, CommitColor newColor) {
+        var oldColor = getColor(sha);
+        queuedColorsCount.computeIfPresent(oldColor, (c, n) -> n - 1);
+        colors.put(sha, newColor);
+        queuedColorsCount.merge(newColor, 1, (c, n) -> n + 1);
+    }
+
+    private boolean shouldContinueSearch() {
+        return queuedColorsCount.getOrDefault(COMMON, 0) > 1
+            || (queuedColorsCount.getOrDefault(BRANCH_A, 0) > 0
+            && queuedColorsCount.getOrDefault(BRANCH_B, 0) > 0);
+    }
+
     @Override
     public Collection<String> findLastCommonCommits(String branchA, String branchB)
         throws IOException {
-        var headA = client.getHeadCommit(branchA);
-        var headB = client.getHeadCommit(branchB);
-        if (Objects.equals(headA.sha, headB.sha)) {
-            return List.of(headA.sha);
+        var headA = client.getHeadCommitSha(branchA);
+        var headB = client.getHeadCommitSha(branchB);
+        if (Objects.equals(headA, headB)) {
+            return List.of(headA);
         }
-        Map<String, CommitColor> colors = new HashMap<>();
-        colors.put(headA.sha, BRANCH_A);
-        colors.put(headB.sha, BRANCH_B);
-        Queue<Commit> queue = new PriorityQueue<>(Comparator.comparing(c -> c.commit.author.date));
-        queue.add(headA);
-        queue.add(headB);
-        int commonCounter = 0;
+        enqueueCommit(headA, BRANCH_A);
+        enqueueCommit(headB, BRANCH_B);
         Set<String> result = new HashSet<>();
-        while (queue.size() > commonCounter) {
-            var currentCommit = queue.remove();
-            var currentColor = colors.get(currentCommit.sha);
-            if (currentColor == COMMON) {
-                commonCounter--;
-            }
-            for (var parent: currentCommit.parents) {
-                var parentColor = colors.getOrDefault(parent.sha, UNASSIGNED);
+        while (shouldContinueSearch()) {
+            var currentCommit = dequeueCommit();
+            var currentColor = getColor(currentCommit.sha);
+            for (var parent : currentCommit.parents) {
+                var parentColor = getColor(parent.sha);
                 switch (parentColor) {
-                    case UNASSIGNED -> {
-                        colors.put(parent.sha, currentColor);
-                        // TODO: this should be async
-                        queue.add(client.getCommit(parent.sha));
-                    }
+                    case UNASSIGNED -> enqueueCommit(parent.sha, currentColor);
                     case COMMON -> {
                         if (currentColor == COMMON) {
                             result.remove(parent.sha);
                         }
                     }
                     default -> {
-                        if (currentColor != parentColor) {
-                            colors.put(parent.sha, COMMON);
+                        if (parentColor != currentColor) {
                             result.add(parent.sha);
+                            changeColor(parent.sha, COMMON);
                         }
                     }
                 }
-                if (parentColor != COMMON && colors.get(parent.sha) == COMMON) {
-                    commonCounter++;
-                }
             }
+            System.out.println("Processed " + currentCommit.sha);
         }
         return result;
     }

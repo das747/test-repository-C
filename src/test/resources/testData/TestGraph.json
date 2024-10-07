@@ -33,11 +33,22 @@
     },
     {
       "sha": "3",
-      "parents": [
+      "parents": [{
+        "sha": "4"
+      }
       ],
       "commit": {
         "author": {
           "date": "2024-01-29T15:20:00Z"
+        }
+      }
+    },
+    {
+      "sha": "4",
+      "parents": [],
+      "commit": {
+        "author": {
+          "date": "2024-01-28T15:20:00Z"
         }
       }
     }

@@ -39,9 +39,9 @@ public class LastCommonCommitsFinderImplTest {
             when(mockedClient.getCommit(commit.sha)).thenReturn(commit);
         }
         var headA = mockedClient.getCommit(testData.branches.get(BRANCH_A));
-        when(mockedClient.getHeadCommit(BRANCH_A)).thenReturn(headA);
+        when(mockedClient.getHeadCommitSha(BRANCH_A)).thenReturn(headA.sha);
         var headB = mockedClient.getCommit(testData.branches.get(BRANCH_B));
-        when(mockedClient.getHeadCommit(BRANCH_B)).thenReturn(headB);
+        when(mockedClient.getHeadCommitSha(BRANCH_B)).thenReturn(headB.sha);
         return mockedClient;
     }
 
