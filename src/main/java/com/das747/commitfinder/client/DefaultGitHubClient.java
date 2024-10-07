@@ -1,5 +1,7 @@
-package com.das747;
+package com.das747.commitfinder.client;
 
+import com.das747.commitfinder.Commit;
+import com.das747.commitfinder.GitHubService;
 import java.io.IOException;
 import org.jetbrains.annotations.NotNull;
 

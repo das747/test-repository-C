@@ -24,5 +24,5 @@ tasks.test {
 }
 
 application {
-    mainClass.set("com.das747.Main")
+    mainClass.set("com.das747.commitfinder.Main")
 }

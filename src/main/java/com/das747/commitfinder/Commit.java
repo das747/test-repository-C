@@ -1,4 +1,4 @@
-package com.das747;
+package com.das747.commitfinder;
 
 import java.util.Date;
 import java.util.List;

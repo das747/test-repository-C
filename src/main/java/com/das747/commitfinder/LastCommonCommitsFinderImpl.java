@@ -1,7 +1,9 @@
-package com.das747;
+package com.das747.commitfinder;
 
-import static com.das747.LastCommonCommitsFinderImpl.CommitColor.*;
+import static com.das747.commitfinder.LastCommonCommitsFinderImpl.CommitColor.*;
 
+import com.das747.commitfinder.api.LastCommonCommitsFinder;
+import com.das747.commitfinder.client.GitHubClient;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Comparator;

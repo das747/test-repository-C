@@ -1,4 +1,4 @@
-package com.das747;
+package com.das747.commitfinder.api;
 
 import java.io.IOException;
 import java.util.Collection;

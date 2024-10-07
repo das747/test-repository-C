@@ -1,5 +1,8 @@
-package com.das747;
+package com.das747.commitfinder.client.caching;
 
+import com.das747.commitfinder.Commit;
+import com.das747.commitfinder.GitHubService;
+import com.das747.commitfinder.client.GitHubClientBase;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -7,11 +10,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class CachingGitHubClient extends GitHubClientBase {
 
-
     private Instant lastAccessTime = Instant.MIN;
     private final CommitCache cache;
 
-    CachingGitHubClient(
+    public CachingGitHubClient(
         CommitCache cache,
         GitHubService service,
         String repoOwner,

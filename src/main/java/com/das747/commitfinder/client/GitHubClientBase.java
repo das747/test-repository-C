@@ -1,19 +1,21 @@
-package com.das747;
+package com.das747.commitfinder.client;
 
+import com.das747.commitfinder.GitHubService;
 import java.io.IOException;
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 
 
 
-abstract class GitHubClientBase implements GitHubClient {
+public abstract class GitHubClientBase implements GitHubClient {
 
     protected GitHubService service;
     protected String repoOwner;
     protected String repoName;
     protected String authorisation;
 
-    GitHubClientBase(GitHubService service, String repoOwner, String repoName, String token) {
+    protected GitHubClientBase(GitHubService service, String repoOwner, String repoName,
+        String token) {
         this.service = service;
         this.repoOwner = repoOwner;
         this.repoName = repoName;

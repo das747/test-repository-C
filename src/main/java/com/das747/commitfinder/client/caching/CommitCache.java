@@ -1,5 +1,6 @@
-package com.das747;
+package com.das747.commitfinder.client.caching;
 
+import com.das747.commitfinder.Commit;
 import org.jetbrains.annotations.NotNull;
 
 interface CommitCache {

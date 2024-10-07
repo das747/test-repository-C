@@ -1,8 +1,9 @@
-package com.das747;
+package com.das747.commitfinder;
 
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
+import com.das747.commitfinder.client.GitHubClient;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.nio.file.Files;
