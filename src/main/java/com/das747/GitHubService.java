@@ -20,7 +20,7 @@ public interface GitHubService {
     );
 
     @Headers("Accept: application/vnd.github+json")
-    @GET("/repos/{owner}/{repo}/commits")
+    @GET("/repos/{owner}/{repo}/commits?per_page=100")
     Call<List<Commit>> listCommits(
         @Path("owner") String owner,
         @Path("repo") String repo,
@@ -28,4 +28,12 @@ public interface GitHubService {
         @Header("Authorization") String authorisation
     );
 
+    @Headers("Accept: application/vnd.github+json")
+    @GET("/repos/{owner}/{repo}/commits/{sha}")
+    Call<Commit> getCommit(
+        @Path("owner") String owner,
+        @Path("repo") String repo,
+        @Path("sha") String sha,
+        @Header("Authorization") String authorisation
+    );
 }

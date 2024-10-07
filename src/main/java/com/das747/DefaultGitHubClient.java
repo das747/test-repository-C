@@ -11,14 +11,13 @@ public class DefaultGitHubClient extends GitHubClientBase {
 
     @Override
     public @NotNull String getHeadCommitSha(@NotNull String branch) throws IOException {
-        var call = service.getBranch(repoOwner, repoName, branch, authorisation);
-        return makeCall(call).commit.sha;
+        var branchData = makeCall(service.getBranch(repoOwner, repoName, branch, authorisation));
+        return branchData.commit.sha;
     }
 
     @Override
     public @NotNull Commit getCommit(@NotNull String sha) throws IOException {
-        var commits = makeCall(service.listCommits(repoOwner, repoName, sha, authorisation));
-        return commits.get(0);
+        return makeCall(service.getCommit(repoOwner, repoName, sha, authorisation));
     }
 
 }

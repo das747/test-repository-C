@@ -13,7 +13,8 @@ public class LastCommonCommitsFinderFactoryImpl implements LastCommonCommitsFind
             .build()
             .create(GitHubService.class);
 
-        var client = new DefaultGitHubClient(service, owner, repo, token);
+        var cache = new LRUCommitCache(100);
+        var client = new CachingGitHubClient(cache, service, owner, repo, token);
         return new LastCommonCommitsFinderImpl(client);
     }
 }
