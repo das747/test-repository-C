@@ -51,6 +51,6 @@ public class CachingGitHubClient extends GitHubClientBase {
         for (var commit : response) {
             cache.put(commit.sha, commit);
         }
-        return cache.get(sha);
+        return response.get(0);
     }
 }

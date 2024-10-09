@@ -20,8 +20,7 @@ abstract class CommitCacheBase implements CommitCache {
     public Commit put(@NotNull String sha, @NotNull Commit commit) {
         Commit evicted = null;
         if (storage.size() == sizeLimit) {
-            String victimSha = getVictim();
-            evicted = storage.remove(victimSha);
+            evicted = evictCommit();
         }
         storage.put(sha, commit);
         return evicted;
@@ -32,5 +31,5 @@ abstract class CommitCacheBase implements CommitCache {
         return storage.get(sha);
     }
 
-    protected abstract String getVictim();
+    protected abstract Commit evictCommit();
 }

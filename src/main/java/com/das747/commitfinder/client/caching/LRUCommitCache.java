@@ -1,14 +1,19 @@
 package com.das747.commitfinder.client.caching;
 
+import com.das747.commitfinder.Commit;
 import java.util.LinkedHashMap;
 
 public class LRUCommitCache extends CommitCacheBase {
+
     public LRUCommitCache(int sizeLimit) {
         super(sizeLimit, new LinkedHashMap<>(16, 0.75f, true));
     }
 
     @Override
-    protected String getVictim() {
-        return storage.keySet().iterator().next();
+    protected Commit evictCommit() {
+        var iterator = storage.entrySet().iterator();
+        var victim = iterator.next();
+        iterator.remove();
+        return victim.getValue();
     }
 }
