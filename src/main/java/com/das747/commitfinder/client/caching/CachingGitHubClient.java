@@ -34,8 +34,8 @@ public class CachingGitHubClient extends GitHubClientBase {
     @Override
     public @NotNull String getHeadCommitSha(@NotNull String branch) throws IOException {
         var response = makeCall(service.getBranch(repoOwner, repoName, branch, authorisation));
-        cache.put(response.commit.sha, response.commit);
-        return response.commit.sha;
+        cache.put(response.commit().sha(), response.commit());
+        return response.commit().sha();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class CachingGitHubClient extends GitHubClientBase {
         var response = makeCall(service.listCommits(repoOwner, repoName, sha, authorisation));
         updateAccessTime();
         for (var commit : response) {
-            cache.put(commit.sha, commit);
+            cache.put(commit.sha(), commit);
         }
         return response.get(0);
     }

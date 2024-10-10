@@ -3,7 +3,6 @@ package com.das747.commitfinder.client.caching;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
-import com.das747.commitfinder.Commit;
 import org.testng.annotations.Test;
 
 public class LRUCommitCacheTest extends CommitCacheTestBase {
@@ -16,9 +15,9 @@ public class LRUCommitCacheTest extends CommitCacheTestBase {
     @Test
     public void evictionOrder() {
         var cache = createCache(2);
-        var firstCommit = new Commit();
-        var seocndCommit = new Commit();
-        var thirdCommit = new Commit();
+        var firstCommit = createDummyCommit();
+        var seocndCommit = createDummyCommit();
+        var thirdCommit = createDummyCommit();
 
         assertNull(cache.put("1", firstCommit));
         assertNull(cache.put("2", seocndCommit));

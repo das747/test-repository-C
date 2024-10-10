@@ -3,8 +3,8 @@ package com.das747.commitfinder;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
+import com.das747.commitfinder.Commit.AuthorData;
 import com.das747.commitfinder.Commit.CommitData;
-import com.das747.commitfinder.Commit.CommitData.AuthorData;
 import com.das747.commitfinder.Commit.ParentData;
 import com.das747.commitfinder.LastCommonCommitsFinderTest.TestData.TestCommitData;
 import com.das747.commitfinder.client.GitHubClient;
@@ -24,15 +24,15 @@ public class LastCommonCommitsFinderTest {
 
     private static final String BRANCH_A = "branchA";
     private static final String BRANCH_B = "branchB";
-    private static final String OWNER = "owner";
-    private static final String REPO = "repo";
 
     public static class TestData {
+
         public Map<String, String> branches;
         public List<TestCommitData> commits;
         public List<String> solution;
 
         static class TestCommitData {
+
             public String sha;
             public List<String> parents;
         }
@@ -46,30 +46,25 @@ public class LastCommonCommitsFinderTest {
     }
 
     private @NotNull Commit createCommit(TestCommitData commitData, Date timestamp) {
-        var commit = new Commit();
-        commit.sha = commitData.sha;
-        commit.commit = new CommitData();
-        commit.commit.author = new AuthorData();
-        commit.commit.author.date = timestamp;
-        commit.parents = commitData.parents.stream().map(sha -> {
-            var d = new ParentData();
-            d.sha = sha;
-            return d;
-        }).toList();
-        return commit;
+        return new Commit(
+            commitData.sha,
+            commitData.parents.stream().map(ParentData::new).toList(),
+            new CommitData(new AuthorData(timestamp))
+        );
     }
 
     private @NotNull GitHubClient prepareMockClient(@NotNull TestData testData) throws IOException {
         var mockedClient = mock(GitHubClient.class);
         var timestamp = Instant.now();
         for (var commitData : testData.commits) {
-            when(mockedClient.getCommit(commitData.sha)).thenReturn(createCommit(commitData, Date.from(timestamp)));
+            when(mockedClient.getCommit(commitData.sha)).thenReturn(
+                createCommit(commitData, Date.from(timestamp)));
             timestamp = timestamp.plus(Duration.ofMinutes(1));
         }
         var headA = mockedClient.getCommit(testData.branches.get(BRANCH_A));
-        when(mockedClient.getHeadCommitSha(BRANCH_A)).thenReturn(headA.sha);
+        when(mockedClient.getHeadCommitSha(BRANCH_A)).thenReturn(headA.sha());
         var headB = mockedClient.getCommit(testData.branches.get(BRANCH_B));
-        when(mockedClient.getHeadCommitSha(BRANCH_B)).thenReturn(headB.sha);
+        when(mockedClient.getHeadCommitSha(BRANCH_B)).thenReturn(headB.sha());
         return mockedClient;
     }
 

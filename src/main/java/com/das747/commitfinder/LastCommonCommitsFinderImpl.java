@@ -21,7 +21,7 @@ public final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinde
 
     private final GitHubClient client;
     private final Queue<Commit> queue = new PriorityQueue<>(
-        Comparator.comparing((Commit c) -> c.commit.author.date).reversed());
+        Comparator.comparing((Commit c) -> c.commit().author().date()).reversed());
     private final Map<String, CommitColor> colors = new HashMap<>();
     private final Map<CommitColor, Integer> queuedColorsCount = new HashMap<>();
 
@@ -42,7 +42,7 @@ public final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinde
 
     private Commit dequeueCommit() {
         var commit = queue.remove();
-        queuedColorsCount.computeIfPresent(getColor(commit.sha), (c, n) -> n - 1);
+        queuedColorsCount.computeIfPresent(getColor(commit.sha()), (c, n) -> n - 1);
         return commit;
     }
 
@@ -77,25 +77,25 @@ public final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinde
         Set<String> result = new HashSet<>();
         while (shouldContinueSearch()) {
             var currentCommit = dequeueCommit();
-            var currentColor = getColor(currentCommit.sha);
-            for (var parent : currentCommit.parents) {
-                var parentColor = getColor(parent.sha);
+            var currentColor = getColor(currentCommit.sha());
+            for (var parent : currentCommit.parents()) {
+                var parentColor = getColor(parent.sha());
                 switch (parentColor) {
-                    case UNASSIGNED -> enqueueCommit(parent.sha, currentColor);
+                    case UNASSIGNED -> enqueueCommit(parent.sha(), currentColor);
                     case COMMON -> {
                         if (currentColor == COMMON) {
-                            result.remove(parent.sha);
+                            result.remove(parent.sha());
                         }
                     }
                     default -> {
                         if (parentColor != currentColor) {
-                            result.add(parent.sha);
-                            changeColor(parent.sha, COMMON);
+                            result.add(parent.sha());
+                            changeColor(parent.sha(), COMMON);
                         }
                     }
                 }
             }
-            System.out.println("Processed " + currentCommit.sha);
+            System.out.println("Processed " + currentCommit.sha());
         }
         return result;
     }

@@ -3,20 +3,21 @@ package com.das747.commitfinder;
 import java.util.Date;
 import java.util.List;
 
-public class Commit {
-    public String sha;
-    public List<ParentData> parents;
-    public CommitData commit;
+public record Commit(
+    String sha,
+    List<ParentData> parents,
+    CommitData commit
+) {
 
-    public static class ParentData {
-        public String sha;
+    record ParentData(String sha) {
+
     }
 
-    public static class CommitData {
-        public AuthorData author;
+    record CommitData(AuthorData author) {
 
-        public static class AuthorData {
-            public Date date;
-        }
+    }
+
+    record AuthorData(Date date) {
+
     }
 }

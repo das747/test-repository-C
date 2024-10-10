@@ -14,7 +14,7 @@ public class DefaultGitHubClient extends GitHubClientBase {
     @Override
     public @NotNull String getHeadCommitSha(@NotNull String branch) throws IOException {
         var branchData = makeCall(service.getBranch(repoOwner, repoName, branch, authorisation));
-        return branchData.commit.sha;
+        return branchData.commit().sha();
     }
 
     @Override
