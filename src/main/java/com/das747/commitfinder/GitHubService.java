@@ -9,6 +9,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GitHubService {
+    String BASE_URL = "https://api.github.com/";
 
     @Headers("Accept: application/vnd.github+json")
     @GET("/repos/{owner}/{repo}/branches/{branch}")

@@ -19,10 +19,20 @@ dependencies {
     testCompileOnly("org.jetbrains:annotations:25.0.0")
 }
 
+val systemProps by extra {
+    listOf(
+        "commitFinder.cache",
+        "commitFinder.cache.type",
+        "commitFinder.cache.maxSize"
+    )
+}
+
 tasks.test {
     useTestNG()
 }
 
 application {
     mainClass.set("com.das747.commitfinder.Main")
+    applicationDefaultJvmArgs = properties.filterKeys { it in systemProps }.map { "-D${it.key}=${it.value}" }
 }
+
