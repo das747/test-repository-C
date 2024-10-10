@@ -19,7 +19,7 @@ abstract class CommitCacheBase implements CommitCache {
     @Override
     public Commit put(@NotNull String sha, @NotNull Commit commit) {
         Commit evicted = null;
-        if (storage.size() == sizeLimit) {
+        if (!storage.containsKey(sha) && storage.size() == sizeLimit) {
             evicted = evictCommit();
         }
         storage.put(sha, commit);
