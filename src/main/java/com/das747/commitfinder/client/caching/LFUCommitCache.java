@@ -7,7 +7,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import org.jetbrains.annotations.NotNull;
 
-public class LFUCommitCache extends CommitCacheBase {
+class LFUCommitCache extends CommitCacheBase {
 
     private record FrequencyEntry(String sha, int frequency) {
 

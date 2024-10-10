@@ -3,7 +3,7 @@ package com.das747.commitfinder.client.caching;
 import com.das747.commitfinder.Commit;
 import java.util.LinkedHashMap;
 
-public class LRUCommitCache extends CommitCacheBase {
+class LRUCommitCache extends CommitCacheBase {
 
     public LRUCommitCache(int sizeLimit) {
         super(sizeLimit, new LinkedHashMap<>(16, 0.75f, true));

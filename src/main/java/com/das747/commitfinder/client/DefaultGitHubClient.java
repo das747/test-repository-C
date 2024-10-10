@@ -5,7 +5,7 @@ import com.das747.commitfinder.service.GitHubService;
 import java.io.IOException;
 import org.jetbrains.annotations.NotNull;
 
-public class DefaultGitHubClient extends GitHubClientBase {
+class DefaultGitHubClient extends GitHubClientBase {
 
     DefaultGitHubClient(GitHubService service, String repoOwner, String repoName, String token) {
         super(service, repoOwner, repoName, token);

@@ -17,7 +17,7 @@ import java.util.Queue;
 import java.util.Set;
 
 
-public final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinder {
+final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinder {
 
     private final GitHubClient client;
     private final Queue<Commit> queue = new PriorityQueue<>(
