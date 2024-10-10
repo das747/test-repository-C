@@ -1,0 +1,16 @@
+{
+  "$schema": "schemas/testDataSchema.json",
+  "branches": {
+    "branchA": "2",
+    "branchB": "1"
+  },
+  "solution":[
+    "0"
+  ],
+  "commits": [
+    {"sha": "0", "parents": []},
+    {"sha": "1", "parents": ["0"]},
+    {"sha": "2", "parents": ["0"]}
+  ]
+}
+
