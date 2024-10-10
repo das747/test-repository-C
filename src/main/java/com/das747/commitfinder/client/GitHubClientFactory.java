@@ -1,6 +1,6 @@
 package com.das747.commitfinder.client;
 
-import com.das747.commitfinder.GitHubService;
+import com.das747.commitfinder.service.GitHubService;
 import com.das747.commitfinder.client.caching.CachingGitHubClient;
 import com.das747.commitfinder.client.caching.CommitCacheFactory;
 

@@ -1,6 +1,6 @@
 package com.das747.commitfinder;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 public record Commit(
@@ -17,7 +17,7 @@ public record Commit(
 
     }
 
-    record AuthorData(Date date) {
+    record AuthorData(Instant date) {
 
     }
 }

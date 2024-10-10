@@ -1,7 +1,7 @@
 package com.das747.commitfinder.client.caching;
 
 import com.das747.commitfinder.Commit;
-import com.das747.commitfinder.GitHubService;
+import com.das747.commitfinder.service.GitHubService;
 import com.das747.commitfinder.client.GitHubClientBase;
 import java.io.IOException;
 import java.time.Duration;

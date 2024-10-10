@@ -1,6 +1,6 @@
 package com.das747.commitfinder.client;
 
-import com.das747.commitfinder.GitHubService;
+import com.das747.commitfinder.service.GitHubService;
 import java.io.IOException;
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;

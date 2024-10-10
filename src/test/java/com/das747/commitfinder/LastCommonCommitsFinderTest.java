@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +44,7 @@ public class LastCommonCommitsFinderTest {
         return gson.fromJson(json, TestData.class);
     }
 
-    private @NotNull Commit createCommit(TestCommitData commitData, Date timestamp) {
+    private @NotNull Commit createCommit(TestCommitData commitData, Instant timestamp) {
         return new Commit(
             commitData.sha,
             commitData.parents.stream().map(ParentData::new).toList(),
@@ -58,7 +57,7 @@ public class LastCommonCommitsFinderTest {
         var timestamp = Instant.now();
         for (var commitData : testData.commits) {
             when(mockedClient.getCommit(commitData.sha)).thenReturn(
-                createCommit(commitData, Date.from(timestamp)));
+                createCommit(commitData, timestamp));
             timestamp = timestamp.plus(Duration.ofMinutes(1));
         }
         var headA = mockedClient.getCommit(testData.branches.get(BRANCH_A));

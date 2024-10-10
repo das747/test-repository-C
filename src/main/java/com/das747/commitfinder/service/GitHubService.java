@@ -1,5 +1,7 @@
-package com.das747.commitfinder;
+package com.das747.commitfinder.service;
 
+import com.das747.commitfinder.Branch;
+import com.das747.commitfinder.Commit;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
