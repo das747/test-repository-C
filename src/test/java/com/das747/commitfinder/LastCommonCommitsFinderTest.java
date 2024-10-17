@@ -70,7 +70,7 @@ public class LastCommonCommitsFinderTest {
     private void doTest(String name) {
         try {
             var testData = loadTestData(name + ".json");
-            var finder = new LastCommonCommitsFinderImpl(prepareMockClient(testData));
+            var finder = new ChronologicalTraversalCommitsFinder(prepareMockClient(testData));
             var result = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
             assertEqualsNoOrder(result, testData.solution);
         } catch (IOException e) {

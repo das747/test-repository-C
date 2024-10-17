@@ -13,6 +13,6 @@ public class LastCommonCommitsFinderFactoryImpl implements LastCommonCommitsFind
     public LastCommonCommitsFinder create(String owner, String repo, String token) {
         GitHubService service = GitHubServiceFactory.create();
         GitHubClient client = GitHubClientFactory.create(service, owner, repo, token);
-        return new LastCommonCommitsFinderImpl(client);
+        return new ChronologicalTraversalCommitsFinder(client);
     }
 }

@@ -1,6 +1,6 @@
 package com.das747.commitfinder;
 
-import static com.das747.commitfinder.LastCommonCommitsFinderImpl.CommitColor.*;
+import static com.das747.commitfinder.ChronologicalTraversalCommitsFinder.CommitColor.*;
 
 import com.das747.commitfinder.api.LastCommonCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
@@ -17,7 +17,7 @@ import java.util.Queue;
 import java.util.Set;
 
 
-final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinder {
+final class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFinder {
 
     private final GitHubClient client;
     private final Queue<Commit> queue = new PriorityQueue<>(
@@ -25,7 +25,7 @@ final class LastCommonCommitsFinderImpl implements LastCommonCommitsFinder {
     private final Map<String, CommitColor> colors = new HashMap<>();
     private final Map<CommitColor, Integer> queuedColorsCount = new HashMap<>();
 
-    LastCommonCommitsFinderImpl(GitHubClient client) {
+    ChronologicalTraversalCommitsFinder(GitHubClient client) {
         this.client = client;
     }
 
