@@ -18,6 +18,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
+import org.testng.TestException;
 import org.testng.annotations.Test;
 
 abstract class LastCommonCommitsFinderTestBase {
@@ -74,10 +75,12 @@ abstract class LastCommonCommitsFinderTestBase {
         try {
             var testData = loadTestData(name + ".json");
             var finder = createFinder(prepareMockClient(testData));
-            var result = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
-            assertEqualsNoOrder(result, testData.solution);
+            var firstResult = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
+            var secondResult = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
+            assertEqualsNoOrder(firstResult, testData.solution);
+            assertEqualsNoOrder(secondResult, testData.solution);
         } catch (IOException e) {
-            assert false;
+            throw new TestException(e);
         }
     }
 
@@ -105,5 +108,4 @@ abstract class LastCommonCommitsFinderTestBase {
     public void relatedCommonCommits() {
         doTest("relatedCommonCommits");
     }
-
 }

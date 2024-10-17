@@ -37,7 +37,6 @@ public class DepthFirstTraversalCommitsFinder implements LastCommonCommitsFinder
     }
 
 
-
     @Override
     public Collection<String> findLastCommonCommits(String branchA, String branchB)
         throws IOException {
