@@ -6,7 +6,8 @@ import static org.testng.Assert.*;
 import com.das747.commitfinder.Commit.AuthorData;
 import com.das747.commitfinder.Commit.CommitData;
 import com.das747.commitfinder.Commit.ParentData;
-import com.das747.commitfinder.LastCommonCommitsFinderTest.TestData.TestCommitData;
+import com.das747.commitfinder.LastCommonCommitsFinderTestBase.TestData.TestCommitData;
+import com.das747.commitfinder.api.LastCommonCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.Test;
 
-public class LastCommonCommitsFinderTest {
+abstract class LastCommonCommitsFinderTestBase {
 
     private static final String BRANCH_A = "branchA";
     private static final String BRANCH_B = "branchB";
@@ -36,6 +37,8 @@ public class LastCommonCommitsFinderTest {
             public List<String> parents;
         }
     }
+
+    protected abstract LastCommonCommitsFinder createFinder(GitHubClient client);
 
     private TestData loadTestData(String file) throws IOException {
         String path = getClass().getClassLoader().getResource("testData/" + file).getPath();
@@ -70,7 +73,7 @@ public class LastCommonCommitsFinderTest {
     private void doTest(String name) {
         try {
             var testData = loadTestData(name + ".json");
-            var finder = new ChronologicalTraversalCommitsFinder(prepareMockClient(testData));
+            var finder = createFinder(prepareMockClient(testData));
             var result = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
             assertEqualsNoOrder(result, testData.solution);
         } catch (IOException e) {
