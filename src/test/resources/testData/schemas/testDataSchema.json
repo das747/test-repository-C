@@ -4,13 +4,8 @@
   "properties": {
     "branches": {
       "type": "object",
-      "properties": {
-        "branchA": {
-          "type": "string"
-        },
-        "branchB": {
-          "type": "string"
-        }
+      "additionalProperties": {
+        "type": "string"
       },
       "required": [
         "branchA",

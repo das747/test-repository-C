@@ -64,10 +64,10 @@ abstract class LastCommonCommitsFinderTestBase {
                 createCommit(commitData, timestamp));
             timestamp = timestamp.plus(Duration.ofMinutes(1));
         }
-        var headA = mockedClient.getCommit(testData.branches.get(BRANCH_A));
-        when(mockedClient.getHeadCommitSha(BRANCH_A)).thenReturn(headA.sha());
-        var headB = mockedClient.getCommit(testData.branches.get(BRANCH_B));
-        when(mockedClient.getHeadCommitSha(BRANCH_B)).thenReturn(headB.sha());
+        for (var entry : testData.branches.entrySet()) {
+            when(mockedClient.getHeadCommitSha(entry.getKey())).thenReturn(entry.getValue());
+        }
+
         return mockedClient;
     }
 
@@ -108,4 +108,19 @@ abstract class LastCommonCommitsFinderTestBase {
     public void relatedCommonCommits() {
         doTest("relatedCommonCommits");
     }
+
+    @Test
+    public void differentTargets() {
+        try {
+            var testData = loadTestData("threeBranches.json");
+            var finder = createFinder(prepareMockClient(testData));
+            var firstResult = finder.findLastCommonCommits("branchA", "branchB");
+            var secondResult = finder.findLastCommonCommits("branchB", "branchC");
+            assertEqualsNoOrder(firstResult, List.of("0"));
+            assertEqualsNoOrder(secondResult, List.of("2"));
+        } catch (IOException e) {
+            throw new TestException(e);
+        }
+    }
+
 }
