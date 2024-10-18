@@ -5,5 +5,4 @@ module com.das.commitfinder {
     requires com.google.gson;
 
     exports com.das747.commitfinder.api;
-
 }

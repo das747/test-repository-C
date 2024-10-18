@@ -1,4 +1,6 @@
-package com.das747.commitfinder;
+package com.das747.commitfinder.example;
+
+import com.das747.commitfinder.api.LastCommonCommitsFinderFactoryImpl;
 
 public class Main {
 

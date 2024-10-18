@@ -32,7 +32,7 @@ public class DepthFirstTraversalCommitsFinder implements LastCommonCommitsFinder
 
     private ExecutionState state;
 
-    DepthFirstTraversalCommitsFinder(GitHubClient client) {
+    public DepthFirstTraversalCommitsFinder(GitHubClient client) {
         this.client = client;
     }
 

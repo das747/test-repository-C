@@ -1,7 +1,6 @@
-package com.das747.commitfinder;
+package com.das747.commitfinder.api;
 
-import com.das747.commitfinder.api.LastCommonCommitsFinder;
-import com.das747.commitfinder.api.LastCommonCommitsFinderFactory;
+import com.das747.commitfinder.ChronologicalTraversalCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
 import com.das747.commitfinder.client.GitHubClientFactory;
 import com.das747.commitfinder.service.GitHubService;

@@ -17,7 +17,7 @@ import java.util.Queue;
 import java.util.Set;
 
 
-final class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFinder {
+public class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFinder {
 
     private class ExecutionState {
 
@@ -64,7 +64,7 @@ final class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFind
 
     private final GitHubClient client;
 
-    ChronologicalTraversalCommitsFinder(GitHubClient client) {
+    public ChronologicalTraversalCommitsFinder(GitHubClient client) {
         this.client = client;
     }
 
