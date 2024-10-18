@@ -32,7 +32,7 @@ abstract class LastCommonCommitsFinderTestBase {
         public List<TestCommitData> commits;
         public List<String> solution;
 
-        static class TestCommitData {
+        public static class TestCommitData {
 
             public String sha;
             public List<String> parents;
@@ -90,8 +90,8 @@ abstract class LastCommonCommitsFinderTestBase {
          0----2 <- branchB
      */
     @Test
-    public void simpleGraph() {
-        doTest("simpleGraph");
+    public void graphWithSimpleBranching() {
+        doTest("simpleBranching");
     }
 
     /*
@@ -100,15 +100,15 @@ abstract class LastCommonCommitsFinderTestBase {
      */
     @Test
     public void graphWithoutBranching() {
-        doTest("straightGraph");
+        doTest("withoutBranching");
     }
 
     /*
         0---1---2---3 <- branchA, branchB
      */
     @Test
-    public void branchesWithEqualHeads() {
-        doTest("sameCommit");
+    public void graphWithEqualBranches() {
+        doTest("equalBranches");
     }
 
     /*
@@ -118,8 +118,8 @@ abstract class LastCommonCommitsFinderTestBase {
          0---1---3 <- branchB
      */
     @Test
-    public void branchesWithMutualMerges() {
-        doTest("mutualMerge");
+    public void graphWithCrossMerge() {
+        doTest("crossMerge");
     }
 
     /*
@@ -130,7 +130,7 @@ abstract class LastCommonCommitsFinderTestBase {
           +---3 <- branchB
      */
     @Test
-    public void relatedCommonCommits() {
+    public void graphWithRelatedCommonCommits() {
         doTest("relatedCommonCommits");
     }
 
@@ -141,7 +141,7 @@ abstract class LastCommonCommitsFinderTestBase {
          0---2---4 <- branchС
      */
     @Test
-    public void differentTargets() {
+    public void graphWithThreeBranches() {
         try {
             var testData = loadTestData("threeBranches.json");
             var finder = createFinder(prepareMockClient(testData));

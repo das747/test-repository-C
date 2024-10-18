@@ -3,7 +3,6 @@
 ### Tests
 - tests for GitHubClient?
 - more graphs
-- rename finder test methods
 
 ### Code
 - Nullable/NotNull annotations
