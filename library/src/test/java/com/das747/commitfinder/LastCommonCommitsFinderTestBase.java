@@ -84,31 +84,63 @@ abstract class LastCommonCommitsFinderTestBase {
         }
     }
 
+    /*
+            1 <- branchA
+          /
+         0 - - 2 <- branchB
+     */
     @Test
     public void simpleGraph() {
         doTest("simpleGraph");
     }
 
+    /*
+                 <- branchA
+        0 - 1 - 2 - 3 <- branchB
+     */
     @Test
     public void graphWithoutBranching() {
         doTest("straightGraph");
     }
 
+    /*
+        0 - 1 - 2 - 3 <- branchA, branchB
+     */
     @Test
     public void branchesWithEqualHeads() {
         doTest("sameCommit");
     }
 
+    /*
+             _ 2 _ 4 <- branchA
+           /    \ /
+          /     / \
+         0 - - 1 - 3 <- branchB
+     */
     @Test
     public void branchesWithMutualMerges() {
         doTest("mutualMerge");
     }
 
+    /*
+           __ 2 <- branchA
+         /   /
+        0 - 1
+         \   \
+           -- 3 <- branchB
+     */
     @Test
     public void relatedCommonCommits() {
         doTest("relatedCommonCommits");
     }
 
+
+    /*
+             _ 1 <- branchA
+           /    _ 3 <- branchB
+          /   /
+         0 - 2 - 4 <- branchС
+     */
     @Test
     public void differentTargets() {
         try {
