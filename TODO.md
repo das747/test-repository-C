@@ -1,8 +1,5 @@
 # Last Common Commit Finder
 
-### Project
-- separate library and test application (add them as subprojects)
-
 ### Tests
 - tests for GitHubClient?
 - more graphs
@@ -10,6 +7,9 @@
 
 ### Code
 - Nullable/NotNull annotations
+- finder factory
+- result caching
+- logging?
 
 ### Docs
 - write readme:
