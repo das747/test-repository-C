@@ -87,7 +87,7 @@ abstract class LastCommonCommitsFinderTestBase {
     /*
             1 <- branchA
           /
-         0 - - 2 <- branchB
+         0----2 <- branchB
      */
     @Test
     public void simpleGraph() {
@@ -96,7 +96,7 @@ abstract class LastCommonCommitsFinderTestBase {
 
     /*
                  <- branchA
-        0 - 1 - 2 - 3 <- branchB
+        0---1---2---3 <- branchB
      */
     @Test
     public void graphWithoutBranching() {
@@ -104,7 +104,7 @@ abstract class LastCommonCommitsFinderTestBase {
     }
 
     /*
-        0 - 1 - 2 - 3 <- branchA, branchB
+        0---1---2---3 <- branchA, branchB
      */
     @Test
     public void branchesWithEqualHeads() {
@@ -112,10 +112,10 @@ abstract class LastCommonCommitsFinderTestBase {
     }
 
     /*
-             _ 2 _ 4 <- branchA
-           /    \ /
-          /     / \
-         0 - - 1 - 3 <- branchB
+             2---4 <- branchA
+           /  \ /
+          /   / \
+         0---1---3 <- branchB
      */
     @Test
     public void branchesWithMutualMerges() {
@@ -123,23 +123,22 @@ abstract class LastCommonCommitsFinderTestBase {
     }
 
     /*
-           __ 2 <- branchA
+          +---2 <- branchA
          /   /
-        0 - 1
+        0---1
          \   \
-           -- 3 <- branchB
+          +---3 <- branchB
      */
     @Test
     public void relatedCommonCommits() {
         doTest("relatedCommonCommits");
     }
 
-
     /*
-             _ 1 <- branchA
-           /    _ 3 <- branchB
+            1 <- branchA
+           /   3 <- branchB
           /   /
-         0 - 2 - 4 <- branchС
+         0---2---4 <- branchС
      */
     @Test
     public void differentTargets() {
