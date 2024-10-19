@@ -2,6 +2,7 @@ package com.das747.commitfinder.client.caching;
 
 import com.das747.commitfinder.Commit;
 import java.util.LinkedHashMap;
+import org.jetbrains.annotations.NotNull;
 
 class LRUCommitCache extends CommitCacheBase {
 
@@ -10,7 +11,7 @@ class LRUCommitCache extends CommitCacheBase {
     }
 
     @Override
-    protected Commit evictCommit() {
+    protected @NotNull Commit evictCommit() {
         var iterator = storage.entrySet().iterator();
         var victim = iterator.next();
         iterator.remove();

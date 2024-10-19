@@ -7,7 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 class DefaultGitHubClient extends GitHubClientBase {
 
-    DefaultGitHubClient(GitHubService service, String repoOwner, String repoName, String token) {
+    DefaultGitHubClient(
+        @NotNull GitHubService service,
+        @NotNull String repoOwner,
+        @NotNull String repoName,
+        @NotNull String token
+    ) {
         super(service, repoOwner, repoName, token);
     }
 

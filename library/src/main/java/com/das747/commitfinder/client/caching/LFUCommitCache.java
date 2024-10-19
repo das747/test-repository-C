@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 class LFUCommitCache extends CommitCacheBase {
 
@@ -13,16 +14,16 @@ class LFUCommitCache extends CommitCacheBase {
 
     }
 
-    private final SortedSet<FrequencyEntry> frequencyMap = new TreeSet<>(
+    private final @NotNull SortedSet<FrequencyEntry> frequencyMap = new TreeSet<>(
         Comparator.comparing(e -> e.frequency));
-    private final HashMap<String, Integer> frequencies = new HashMap<>();
+    private final @NotNull HashMap<String, Integer> frequencies = new HashMap<>();
 
     public LFUCommitCache(int sizeLimit) {
         super(sizeLimit, new HashMap<>());
     }
 
     @Override
-    protected Commit evictCommit() {
+    protected @NotNull Commit evictCommit() {
         var victimEntry = frequencyMap.first();
         frequencyMap.remove(victimEntry);
         frequencies.remove(victimEntry.sha);
@@ -40,7 +41,7 @@ class LFUCommitCache extends CommitCacheBase {
     }
 
     @Override
-    public Commit get(@NotNull String sha) {
+    public @Nullable Commit get(@NotNull String sha) {
         var commit = super.get(sha);
         if (commit == null) {
             return null;

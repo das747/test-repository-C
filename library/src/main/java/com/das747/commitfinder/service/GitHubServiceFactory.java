@@ -4,12 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import java.time.Instant;
+import org.jetbrains.annotations.NotNull;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public interface GitHubServiceFactory {
 
-    static GitHubService create() {
+    static @NotNull GitHubService create() {
         var instantAdapter = (JsonDeserializer<Instant>) (json, typeOfT, context) ->
             Instant.parse(json.getAsString());
         Gson gson = new GsonBuilder()

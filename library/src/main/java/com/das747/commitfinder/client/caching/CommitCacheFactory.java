@@ -1,15 +1,17 @@
 package com.das747.commitfinder.client.caching;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface CommitCacheFactory {
 
-    static CommitCache create() {
+    static @NotNull CommitCache create() {
         var cacheType = System.getProperty("commitFinder.cache.type", "lru");
 
         var sizeSetting = System.getProperty("commitFinder.cache.maxSize");
         int maxSize = CommitCache.DEFAULT_SIZE;
         if (sizeSetting != null) {
             try {
-                maxSize = Integer.valueOf(sizeSetting);
+                maxSize = Integer.parseInt(sizeSetting);
                 if (maxSize < 1) {
                     System.err.println(
                         "Invalid cache max size: '" + sizeSetting + "'. Using default value '"
@@ -22,8 +24,6 @@ public interface CommitCacheFactory {
                         + CommitCache.DEFAULT_SIZE);
             }
         }
-
-
 
         switch (cacheType) {
             case "lru" -> {

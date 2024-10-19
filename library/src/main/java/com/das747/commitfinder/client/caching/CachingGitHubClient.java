@@ -6,7 +6,9 @@ import com.das747.commitfinder.client.GitHubClientBase;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CachingGitHubClient extends GitHubClientBase {
 
@@ -14,13 +16,14 @@ public class CachingGitHubClient extends GitHubClientBase {
     private final CommitCache cache;
 
     public CachingGitHubClient(
-        CommitCache cache,
-        GitHubService service,
-        String repoOwner,
-        String repoName,
-        String token) {
+        @NotNull CommitCache cache,
+        @NotNull GitHubService service,
+        @NotNull String repoOwner,
+        @NotNull String repoName,
+        @Nullable String token
+    ) {
         super(service, repoOwner, repoName, token);
-        this.cache = cache;
+        this.cache = Objects.requireNonNull(cache);
     }
 
     private boolean accessIsValid() {
