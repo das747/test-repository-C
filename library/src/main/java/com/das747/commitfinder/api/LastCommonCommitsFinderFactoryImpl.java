@@ -4,11 +4,14 @@ import com.das747.commitfinder.finder.ChronologicalTraversalCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
 import com.das747.commitfinder.client.GitHubClientFactory;
 import com.das747.commitfinder.finder.DepthFirstTraversalCommitsFinder;
-import com.das747.commitfinder.service.GitHubService;
-import com.das747.commitfinder.service.GitHubServiceFactory;
-import okhttp3.OkHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LastCommonCommitsFinderFactoryImpl implements LastCommonCommitsFinderFactory {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+        LastCommonCommitsFinderFactoryImpl.class
+    );
 
     @Override
     public LastCommonCommitsFinder create(String owner, String repo, String token) {
@@ -19,15 +22,15 @@ public class LastCommonCommitsFinderFactoryImpl implements LastCommonCommitsFind
 
         switch (algorithmSetting) {
             case "chrono" -> {
+                logger.info("Using 'chrono' finder algorithm");
                 return new ChronologicalTraversalCommitsFinder(client);
             }
             case "dfs" -> {
+                logger.info("Using 'dfs' finder algorithm");
                 return new DepthFirstTraversalCommitsFinder(client);
             }
             default -> {
-                System.err.println(
-                    "Invalid algorithm setting '" + algorithmSetting + "'. Using 'chrono'."
-                );
+                logger.warn("Invalid algorithm setting '{}'. Using 'chrono'.", algorithmSetting);
                 return new ChronologicalTraversalCommitsFinder(client);
             }
         }

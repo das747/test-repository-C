@@ -27,6 +27,7 @@ class LFUCommitCache extends CommitCacheBase {
         var victimEntry = frequencyMap.first();
         frequencyMap.remove(victimEntry);
         frequencies.remove(victimEntry.sha);
+        logger.info("Victim sha: {}, usage count: {}", victimEntry.sha, victimEntry.frequency);
         return storage.remove(victimEntry.sha);
     }
 
@@ -46,7 +47,7 @@ class LFUCommitCache extends CommitCacheBase {
         if (commit == null) {
             return null;
         }
-        int newFrequency = frequencies.compute(sha, (k, v) -> v + 1);
+        int newFrequency = frequencies.merge(sha, 0, (k, v) -> v + 1);
         frequencyMap.remove(new FrequencyEntry(sha, newFrequency - 1));
         frequencyMap.add(new FrequencyEntry(sha, newFrequency));
         return commit;

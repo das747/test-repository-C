@@ -6,6 +6,8 @@ import java.util.Objects;
 import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Call;
 
 
@@ -18,6 +20,8 @@ public abstract class GitHubClientBase implements GitHubClient {
     private final  @NotNull OkHttpClient client;
 
     private boolean isShutDown = false;
+
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected GitHubClientBase(
         @NotNull GitHubService service,
@@ -40,8 +44,12 @@ public abstract class GitHubClientBase implements GitHubClient {
         var response = call.execute();
         if (response.isSuccessful() && response.body() != null) {
             return response.body();
+        } else if (!response.isSuccessful()) {
+            logger.error("Request {} failed with code {}", call, response.code());
+            throw new RuntimeException("Failure: response code " + response.code());
         } else {
-            throw new RuntimeException("Failure: " + response.code());
+            logger.error("Response for {} request has empty body", call);
+            throw new RuntimeException("Failure: response has empty body");
         }
     }
 

@@ -34,6 +34,7 @@ public class CachingGitHubClient extends GitHubClientBase {
 
     private void updateAccessTime() {
         lastAccessTime = Instant.now();
+        logger.info("Updated last access time to {}", lastAccessTime);
     }
 
     @Override
@@ -48,8 +49,11 @@ public class CachingGitHubClient extends GitHubClientBase {
         if (accessIsValid()) {
             var commit = cache.get(sha);
             if (commit != null) {
+                logger.info("Served commit {} from cache", commit.sha());
                 return commit;
             }
+        } else {
+            logger.info("Cached authorization expired, skipping cache");
         }
         var response = makeCall(service.listCommits(repoOwner, repoName, sha, authorisation));
         updateAccessTime();

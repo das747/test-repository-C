@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 abstract class LastCommonCommitsFinderBase implements LastCommonCommitsFinder {
 
@@ -20,8 +22,8 @@ abstract class LastCommonCommitsFinderBase implements LastCommonCommitsFinder {
         }
     }
 
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     protected @NotNull GitHubClient client;
-
     private final @NotNull Map<CommitPair, Collection<String>> resultCache = new HashMap<>();
 
     LastCommonCommitsFinderBase(@NotNull GitHubClient client) {
@@ -36,6 +38,7 @@ abstract class LastCommonCommitsFinderBase implements LastCommonCommitsFinder {
         var headA = client.getHeadCommitSha(branchA);
         var headB = client.getHeadCommitSha(branchB);
         if (headA.equals(headB)) {
+            logger.info("Served result from cache for '{}' and '{}'", headA, headB);
             return List.of(headA);
         }
         var pair = new CommitPair(headA, headB);
