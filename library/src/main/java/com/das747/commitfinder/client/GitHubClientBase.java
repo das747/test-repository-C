@@ -48,6 +48,7 @@ public abstract class GitHubClientBase implements GitHubClient {
     @Override
     public void shutdown() {
         assert !isShutDown;
+        // https://github.com/square/retrofit/issues/3144
         client.dispatcher().executorService().shutdown();
         client.connectionPool().evictAll();
         isShutDown = true;
