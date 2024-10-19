@@ -6,7 +6,6 @@
 - fixture?
 
 ### Code
-- logging?
 - example app
 
 ### Docs

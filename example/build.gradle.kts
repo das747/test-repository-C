@@ -11,7 +11,9 @@ repositories {
 }
 
 dependencies {
-    implementation((project(":library")))
+    implementation(project(":library"))
+    implementation("org.slf4j:slf4j-api:2.0.16")
+    implementation("ch.qos.logback:logback-classic:1.5.6")
 }
 
 val systemProps by extra {
