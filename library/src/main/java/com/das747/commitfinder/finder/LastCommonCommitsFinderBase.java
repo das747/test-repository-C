@@ -38,17 +38,18 @@ abstract class LastCommonCommitsFinderBase implements LastCommonCommitsFinder {
         var headA = client.getHeadCommitSha(branchA);
         var headB = client.getHeadCommitSha(branchB);
         if (headA.equals(headB)) {
-            logger.info("Served result from cache for '{}' and '{}'", headA, headB);
+            logger.info("Head commits for {} and {} are equal: {}", branchA, branchB, headA);
             return List.of(headA);
         }
         var pair = new CommitPair(headA, headB);
-        return resultCache.computeIfAbsent(pair, k -> {
-            try {
-                return doFindLastCommonCommits(headA, headB);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        if (resultCache.containsKey(pair)) {
+            logger.info("Served cached result for '{}' and '{}'", headA, headB);
+            return resultCache.get(pair);
+        }
+
+        var result = doFindLastCommonCommits(headA, headB);
+        resultCache.put(pair, result);
+        return result;
     }
 
     @Override
