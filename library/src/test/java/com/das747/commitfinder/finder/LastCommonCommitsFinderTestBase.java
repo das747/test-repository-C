@@ -1,12 +1,13 @@
-package com.das747.commitfinder;
+package com.das747.commitfinder.finder;
 
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
+import com.das747.commitfinder.Commit;
 import com.das747.commitfinder.Commit.AuthorData;
 import com.das747.commitfinder.Commit.CommitData;
 import com.das747.commitfinder.Commit.ParentData;
-import com.das747.commitfinder.LastCommonCommitsFinderTestBase.TestData.TestCommitData;
+import com.das747.commitfinder.finder.LastCommonCommitsFinderTestBase.TestData.TestCommitData;
 import com.das747.commitfinder.api.LastCommonCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
 import com.google.gson.Gson;
@@ -75,10 +76,12 @@ abstract class LastCommonCommitsFinderTestBase {
         try {
             var testData = loadTestData(name + ".json");
             var finder = createFinder(prepareMockClient(testData));
-            var firstResult = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
-            var secondResult = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
-            assertEqualsNoOrder(firstResult, testData.solution);
-            assertEqualsNoOrder(secondResult, testData.solution);
+            var result = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
+            var resultRepetition = finder.findLastCommonCommits(BRANCH_A, BRANCH_B);
+            var resultSwap = finder.findLastCommonCommits(BRANCH_B, BRANCH_A);
+            assertEqualsNoOrder(result, testData.solution);
+            assertEqualsNoOrder(resultRepetition, testData.solution);
+            assertEqualsNoOrder(resultSwap, testData.solution);
         } catch (IOException e) {
             throw new TestException(e);
         }

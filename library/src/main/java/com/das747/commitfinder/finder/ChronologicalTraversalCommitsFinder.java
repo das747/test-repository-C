@@ -1,25 +1,22 @@
-package com.das747.commitfinder;
+package com.das747.commitfinder.finder;
 
-import static com.das747.commitfinder.ChronologicalTraversalCommitsFinder.CommitColor.*;
+import static com.das747.commitfinder.finder.ChronologicalTraversalCommitsFinder.CommitColor.*;
 
-import com.das747.commitfinder.api.LastCommonCommitsFinder;
+import com.das747.commitfinder.Commit;
 import com.das747.commitfinder.client.GitHubClient;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
 
-public class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFinder {
+public class ChronologicalTraversalCommitsFinder extends LastCommonCommitsFinderBase {
 
     private class ExecutionState {
 
@@ -65,27 +62,20 @@ public class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFin
         UNASSIGNED
     }
 
-    private final @NotNull GitHubClient client;
-
     public ChronologicalTraversalCommitsFinder(@NotNull GitHubClient client) {
-        this.client = Objects.requireNonNull(client);
+        super(client);
     }
 
-
     @Override
-    public Collection<String> findLastCommonCommits(String branchA, String branchB)
-        throws IOException {
-        Objects.requireNonNull(branchA);
-        Objects.requireNonNull(branchB);
+    protected @NotNull Collection<String> doFindLastCommonCommits(
+        @NotNull String headA,
+        @NotNull String headB
+    ) throws IOException {
         ExecutionState state = new ExecutionState();
-        var headA = client.getHeadCommitSha(branchA);
-        var headB = client.getHeadCommitSha(branchB);
-        if (Objects.equals(headA, headB)) {
-            return List.of(headA);
-        }
+        Set<String> result = new HashSet<>();
+
         state.enqueueCommit(headA, BRANCH_A);
         state.enqueueCommit(headB, BRANCH_B);
-        Set<String> result = new HashSet<>();
         while (state.shouldContinueSearch()) {
             var currentCommit = state.dequeueCommit();
             var currentColor = state.getColor(currentCommit.sha());

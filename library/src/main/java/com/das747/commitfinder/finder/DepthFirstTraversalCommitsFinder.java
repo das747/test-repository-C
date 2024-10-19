@@ -1,23 +1,21 @@
-package com.das747.commitfinder;
+package com.das747.commitfinder.finder;
 
 
-import static com.das747.commitfinder.DepthFirstTraversalCommitsFinder.CommitColors.*;
+import static com.das747.commitfinder.finder.DepthFirstTraversalCommitsFinder.CommitColors.*;
 
-import com.das747.commitfinder.api.LastCommonCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
-public class DepthFirstTraversalCommitsFinder implements LastCommonCommitsFinder {
+public class DepthFirstTraversalCommitsFinder extends LastCommonCommitsFinderBase {
 
     private static class ExecutionState {
+
         private final @NotNull Map<String, CommitColors> commitColors = new HashMap<>();
         private final @NotNull Set<String> result = new HashSet<>();
     }
@@ -29,26 +27,18 @@ public class DepthFirstTraversalCommitsFinder implements LastCommonCommitsFinder
         UNASSIGNED
     }
 
-    private final @NotNull GitHubClient client;
-
     private ExecutionState state;
 
     public DepthFirstTraversalCommitsFinder(@NotNull GitHubClient client) {
-        this.client = Objects.requireNonNull(client);
+        super(client);
     }
 
-
     @Override
-    public Collection<String> findLastCommonCommits(String branchA, String branchB)
-        throws IOException {
-        Objects.requireNonNull(branchA);
-        Objects.requireNonNull(branchB);
+    protected @NotNull Collection<String> doFindLastCommonCommits(
+        @NotNull String headA,
+        @NotNull String headB
+    ) throws IOException {
         state = new ExecutionState();
-        var headA = client.getHeadCommitSha(branchA);
-        var headB = client.getHeadCommitSha(branchB);
-        if (Objects.equals(headA, headB)) {
-            return List.of(headA);
-        }
         visitCommit(headA, BRANCH_A);
         visitCommit(headB, BRANCH_B);
         return state.result;
@@ -73,7 +63,7 @@ public class DepthFirstTraversalCommitsFinder implements LastCommonCommitsFinder
             }
         }
         currentColor = state.commitColors.get(sha);
-        for (var parent: commit.parents()) {
+        for (var parent : commit.parents()) {
             visitCommit(parent.sha(), currentColor);
         }
     }

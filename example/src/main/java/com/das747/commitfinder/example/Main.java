@@ -9,6 +9,8 @@ public class Main {
         try {
             var result = finder.findLastCommonCommits("main", "dan/apu");
             result.forEach(s -> System.out.println(s));
+            result = finder.findLastCommonCommits("dan/apu", "main");
+            result.forEach(s -> System.out.println(s));
         } catch (Exception e) {
             e.printStackTrace();
         }

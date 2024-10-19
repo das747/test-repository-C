@@ -6,7 +6,6 @@
 
 ### Code
 - finder factory
-- result caching
 - logging?
 
 ### Docs

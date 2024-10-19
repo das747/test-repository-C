@@ -9,15 +9,15 @@ public record Commit(
     CommitData commit
 ) {
 
-    record ParentData(String sha) {
+    public record ParentData(String sha) {
 
     }
 
-    record CommitData(AuthorData author) {
+    public record CommitData(AuthorData author) {
 
     }
 
-    record AuthorData(Instant date) {
+    public record AuthorData(Instant date) {
 
     }
 }

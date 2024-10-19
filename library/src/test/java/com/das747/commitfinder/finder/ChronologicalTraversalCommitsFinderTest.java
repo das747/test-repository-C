@@ -1,6 +1,4 @@
-package com.das747.commitfinder;
-
-import static org.testng.Assert.*;
+package com.das747.commitfinder.finder;
 
 import com.das747.commitfinder.api.LastCommonCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
