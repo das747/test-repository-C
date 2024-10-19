@@ -3,10 +3,12 @@
 ### Tests
 - tests for GitHubClient?
 - more graphs
+- fixture?
 
 ### Code
-- finder factory
 - logging?
+- client shutdown
+- example app
 
 ### Docs
 - write readme:

@@ -18,7 +18,8 @@ val systemProps by extra {
     listOf(
         "commitFinder.cache",
         "commitFinder.cache.type",
-        "commitFinder.cache.maxSize"
+        "commitFinder.cache.maxSize",
+        "commitFinder.algorithm",
     )
 }
 
