@@ -10,4 +10,6 @@ public interface GitHubClient {
 
     @NotNull Commit getCommit(@NotNull String sha) throws IOException;
 
+    void shutdown();
+
 }

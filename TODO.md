@@ -7,7 +7,6 @@
 
 ### Code
 - logging?
-- client shutdown
 - example app
 
 ### Docs

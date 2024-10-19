@@ -13,9 +13,8 @@ public class Main {
             result.forEach(s -> System.out.println(s));
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            finder.shutdown();
         }
-
-//        client.dispatcher().executorService().shutdown();
-//        client.connectionPool().evictAll();
     }
 }

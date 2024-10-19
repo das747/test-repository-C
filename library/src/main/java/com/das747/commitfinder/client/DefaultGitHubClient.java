@@ -3,6 +3,7 @@ package com.das747.commitfinder.client;
 import com.das747.commitfinder.Commit;
 import com.das747.commitfinder.service.GitHubService;
 import java.io.IOException;
+import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 
 class DefaultGitHubClient extends GitHubClientBase {
@@ -11,9 +12,10 @@ class DefaultGitHubClient extends GitHubClientBase {
         @NotNull GitHubService service,
         @NotNull String repoOwner,
         @NotNull String repoName,
-        @NotNull String token
+        @NotNull String token,
+        @NotNull OkHttpClient client
     ) {
-        super(service, repoOwner, repoName, token);
+        super(service, repoOwner, repoName, token, client);
     }
 
     @Override

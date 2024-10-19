@@ -16,4 +16,6 @@ public interface LastCommonCommitsFinder {
    */
   Collection<String> findLastCommonCommits(String branchA, String branchB) throws IOException;
 
+  void shutdown();
+
 }

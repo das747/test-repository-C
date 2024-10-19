@@ -46,7 +46,11 @@ abstract class LastCommonCommitsFinderBase implements LastCommonCommitsFinder {
                 throw new RuntimeException(e);
             }
         });
+    }
 
+    @Override
+    public void shutdown() {
+        client.shutdown();
     }
 
     protected abstract @NotNull Collection<String> doFindLastCommonCommits(

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
+import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,9 +21,10 @@ public class CachingGitHubClient extends GitHubClientBase {
         @NotNull GitHubService service,
         @NotNull String repoOwner,
         @NotNull String repoName,
-        @Nullable String token
+        @Nullable String token,
+        @NotNull OkHttpClient client
     ) {
-        super(service, repoOwner, repoName, token);
+        super(service, repoOwner, repoName, token, client);
         this.cache = Objects.requireNonNull(cache);
     }
 
