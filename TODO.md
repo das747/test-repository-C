@@ -5,7 +5,6 @@
 - more graphs
 
 ### Code
-- Nullable/NotNull annotations
 - finder factory
 - result caching
 - logging?

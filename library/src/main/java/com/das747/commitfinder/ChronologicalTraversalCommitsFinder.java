@@ -6,6 +6,7 @@ import com.das747.commitfinder.api.LastCommonCommitsFinder;
 import com.das747.commitfinder.client.GitHubClient;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,33 +16,35 @@ import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 
 public class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFinder {
 
     private class ExecutionState {
 
-        private final Queue<Commit> queue = new PriorityQueue<>(
-            Comparator.comparing((Commit c) -> c.commit().author().date()).reversed());
-        private final Map<String, CommitColor> colors = new HashMap<>();
-        private final Map<CommitColor, Integer> queuedColorsCount = new HashMap<>();
+        private final @NotNull Queue<Commit> queue = new PriorityQueue<>(
+            Comparator.comparing((Commit c) -> c.commit().author().date()).reversed()
+        );
+        private final @NotNull Map<String, CommitColor> colors = new HashMap<>();
+        private final @NotNull Map<CommitColor, Integer> queuedColorsCount = new HashMap<>();
 
-        private CommitColor getColor(String sha) {
+        private CommitColor getColor(@NotNull String sha) {
             return colors.getOrDefault(sha, UNASSIGNED);
         }
 
-        private Commit dequeueCommit() {
+        private @NotNull Commit dequeueCommit() {
             var commit = queue.remove();
             queuedColorsCount.computeIfPresent(getColor(commit.sha()), (c, n) -> n - 1);
             return commit;
         }
 
-        private void enqueueCommit(String sha, CommitColor color) throws IOException {
+        private void enqueueCommit(@NotNull String sha, CommitColor color) throws IOException {
             queue.add(client.getCommit(sha));
             changeColor(sha, color);
         }
 
-        private void changeColor(String sha, CommitColor newColor) {
+        private void changeColor(@NotNull String sha, CommitColor newColor) {
             var oldColor = getColor(sha);
             queuedColorsCount.computeIfPresent(oldColor, (c, n) -> n - 1);
             colors.put(sha, newColor);
@@ -62,16 +65,18 @@ public class ChronologicalTraversalCommitsFinder implements LastCommonCommitsFin
         UNASSIGNED
     }
 
-    private final GitHubClient client;
+    private final @NotNull GitHubClient client;
 
-    public ChronologicalTraversalCommitsFinder(GitHubClient client) {
-        this.client = client;
+    public ChronologicalTraversalCommitsFinder(@NotNull GitHubClient client) {
+        this.client = Objects.requireNonNull(client);
     }
 
 
     @Override
     public Collection<String> findLastCommonCommits(String branchA, String branchB)
         throws IOException {
+        Objects.requireNonNull(branchA);
+        Objects.requireNonNull(branchB);
         ExecutionState state = new ExecutionState();
         var headA = client.getHeadCommitSha(branchA);
         var headB = client.getHeadCommitSha(branchB);

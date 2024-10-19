@@ -13,12 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 public class DepthFirstTraversalCommitsFinder implements LastCommonCommitsFinder {
 
     private static class ExecutionState {
-        private final Map<String, CommitColors> commitColors = new HashMap<>();
-        private final Set<String> result = new HashSet<>();
+        private final @NotNull Map<String, CommitColors> commitColors = new HashMap<>();
+        private final @NotNull Set<String> result = new HashSet<>();
     }
 
     protected enum CommitColors {
@@ -28,18 +29,20 @@ public class DepthFirstTraversalCommitsFinder implements LastCommonCommitsFinder
         UNASSIGNED
     }
 
-    private final GitHubClient client;
+    private final @NotNull GitHubClient client;
 
     private ExecutionState state;
 
-    public DepthFirstTraversalCommitsFinder(GitHubClient client) {
-        this.client = client;
+    public DepthFirstTraversalCommitsFinder(@NotNull GitHubClient client) {
+        this.client = Objects.requireNonNull(client);
     }
 
 
     @Override
     public Collection<String> findLastCommonCommits(String branchA, String branchB)
         throws IOException {
+        Objects.requireNonNull(branchA);
+        Objects.requireNonNull(branchB);
         state = new ExecutionState();
         var headA = client.getHeadCommitSha(branchA);
         var headB = client.getHeadCommitSha(branchB);
