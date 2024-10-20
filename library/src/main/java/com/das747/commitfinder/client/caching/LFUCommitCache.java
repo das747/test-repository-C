@@ -27,7 +27,6 @@ class LFUCommitCache extends CommitCacheBase {
         var victimEntry = frequencyMap.first();
         frequencyMap.remove(victimEntry);
         frequencies.remove(victimEntry.sha);
-        logger.info("Victim sha: {}, usage count: {}", victimEntry.sha, victimEntry.frequency);
         return storage.remove(victimEntry.sha);
     }
 

@@ -96,7 +96,6 @@ public class ChronologicalTraversalCommitsFinder extends LastCommonCommitsFinder
                     }
                 }
             }
-            logger.info("Processed commit {}", currentCommit.sha());
         }
         return result;
     }

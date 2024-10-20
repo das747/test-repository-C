@@ -31,9 +31,7 @@ abstract class CommitCacheBase implements CommitCache {
     public Commit put(@NotNull String sha, @NotNull Commit commit) {
         Commit evicted = null;
         if (!storage.containsKey(sha) && storage.size() == sizeLimit) {
-            logger.info("Cache is full, performing eviction");
             evicted = evictCommit();
-            logger.info("Evicted commit {}", evicted.sha());
         }
         storage.put(sha, commit);
         return evicted;
