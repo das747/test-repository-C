@@ -59,6 +59,8 @@ public class DepthFirstTraversalCommitsFinder extends LastCommonCommitsFinderBas
                 if (currentColor != color && color != COMMON) {
                     state.result.add(sha);
                     state.commitColors.put(sha, COMMON);
+                } else if (currentColor == color) {
+                    return;
                 }
             }
         }
