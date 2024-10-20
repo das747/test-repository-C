@@ -38,8 +38,10 @@ Library settings can be passed as gradle properties:
 Library functionality is divided between two components:
 ### GitHubClient
 [GitHubClient](library/src/main/java/com/das747/commitfinder/client/GitHubClient.java) interface provides methods for requesting commit data (implementations are expected to make calls to GitHub REST API)
-- [DefaultGitHubClient](library/src/main/java/com/das747/commitfinder/client/DefaultGitHubClient.java): straightforward client that makes request on each method call
-- [CachingGitHubClient](library/src/main/java/com/das747/commitfinder/client/caching/CachingGitHubClient.java): this client uses [CommitCache](library/src/main/java/com/das747/commitfinder/client/caching/CommitCache.java) to store commit data and returns cached commits when possible. Commit data can be cached because each commit is immutable once created (on the other hand, branch data cannot be cached). This client also makes use of bulk requests - extra commits will be cached. [LFU](library/src/main/java/com/das747/commitfinder/client/caching/LFUCommitCache.java) and [LRU](library/src/main/java/com/das747/commitfinder/client/caching/LRUCommitCache.java) caches are implemented.
+#### [DefaultGitHubClient](library/src/main/java/com/das747/commitfinder/client/DefaultGitHubClient.java)
+Straightforward client that makes request on each method call
+#### [CachingGitHubClient](library/src/main/java/com/das747/commitfinder/client/caching/CachingGitHubClient.java)
+This client uses [CommitCache](library/src/main/java/com/das747/commitfinder/client/caching/CommitCache.java) to store commit data and returns cached commits when possible. Commit data can be cached because each commit is immutable once created (on the other hand, branch data cannot be cached). This client also makes use of bulk requests - extra commits will be cached. [LFU](library/src/main/java/com/das747/commitfinder/client/caching/LFUCommitCache.java) and [LRU](library/src/main/java/com/das747/commitfinder/client/caching/LRUCommitCache.java) caches are implemented.
 
 ### LastCommonCommitsFinder
 Actual graph traversal algorithms are implemented in [LastCommonCommitsFinder](library/src/main/java/com/das747/commitfinder/api/LastCommonCommitsFinder.java) implementations: 
@@ -47,7 +49,7 @@ Actual graph traversal algorithms are implemented in [LastCommonCommitsFinder](l
 - Dijkstra-like traversal that uses commit timestamps to determine next commit to visit. Such traversal order makes good use of cache since GitHub API bulk commit requests return commits in chronological order. 
 - Commits are colored according to their reachability from branches heads. If queue contains only one common commit and commits reachable from only one of the branches, search can be terminated. This optimisation allows to avoid loading of branch histories past divergence point.
 
-#### [DepthFirstTraversalCommitsFinder](library/src/main/java/com/das747/commitfinder/finder/DepthFirstTraversalCommitsFinder.java):
-- DFS style traversal that colors commits according to their reachability from branches heads. Each commit will be traversed no more than two times.
+#### [DepthFirstTraversalCommitsFinder](library/src/main/java/com/das747/commitfinder/finder/DepthFirstTraversalCommitsFinder.java)
+DFS style traversal that colors commits according to their reachability from branches heads. Each commit will be traversed no more than two times.
 
 
