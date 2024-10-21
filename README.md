@@ -1,19 +1,5 @@
 # Last Common Commits Finder
-<!-- TOC -->
-* [Last Common Commits Finder](#last-common-commits-finder)
-    * [Usage](#usage)
-        * [Configuration](#configuration)
-        * [Tests](#tests)
-        * [Logging](#logging)
-        * [Example application](#example-application)
-    * [Implementation overview](#implementation-overview)
-        * [GitHubClient](#githubclient)
-            * [DefaultGitHubClient](#defaultgithubclient)
-            * [CachingGitHubClient](#cachinggithubclient)
-        * [LastCommonCommitsFinder](#lastcommoncommitsfinder)
-            * [ChronologicalTraversalCommitsFinder](#chronologicaltraversalcommitsfinder)
-            * [DepthFirstTraversalCommitsFinder](#depthfirsttraversalcommitsfinder)
-<!-- TOC -->
+
 
 ## Overview
 This project includes a [Java library](library) that provides an algorithm for finding last common commits between two branches of a GitHub repository and an [example application](example) that illustrates its usage. Library uses [retrofit2](https://square.github.io/retrofit/) for requests and [SLF4J](https://slf4j.org/) for logging.

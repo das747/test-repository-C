@@ -7,12 +7,3 @@
 
 ### Code
 - example app
-
-### Docs
-- write readme:
-  - general description
-  - architecture
-  - component description
-  - component implementation specifics
-  - decisions explanation
-  - extensibility remarks
