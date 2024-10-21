@@ -45,11 +45,11 @@ public abstract class GitHubClientBase implements GitHubClient {
         if (response.isSuccessful() && response.body() != null) {
             return response.body();
         } else if (!response.isSuccessful()) {
-            logger.error("Request {} failed with code {}", call, response.code());
-            throw new RuntimeException("Failure: response code " + response.code());
+            logger.error("Request to {} failed with code {}", call.request().url(), response.code());
+            throw new IOException("Failure: response code " + response.code());
         } else {
-            logger.error("Response for {} request has empty body", call);
-            throw new RuntimeException("Failure: response has empty body");
+            logger.error("Response for {} request has empty body", call.request());
+            throw new IOException("Failure: response has empty body");
         }
     }
 
