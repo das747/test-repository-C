@@ -56,3 +56,26 @@ Actual graph traversal strategies are handled by [LastCommonCommitsFinder](libra
 - DFS style traversal that colors commits according to their reachability from branches heads. Each commit will be traversed no more than two times.
 
 Both implementations also cache results, so repeating requests with same head commits can be served effectively.
+
+# Afterthoughts
+## Extensibility and customizability
+I tried to design this library to be expandable. Obviously, there is possibility of addition of more algorithm implementations (not necessarily the same algorithm, any kind of queries to the commit graph can be implemented) and cache policies. But there is more: 
+- Current algorithms can be easily modified to work with the arbitrary number of branches. The main change would be to swap node colours for bitmasks. 
+- Other git hosting services can be supported by generalizing GitHubClient interface and implementing respective clients (as long as it is possible to adapt their API to current client interface).
+
+## Concurrency
+Everything is implemented in the sequential way, however some elements could potentially benefit from concurrent execution.
+Concurrent fetching of parent commits in chronological traversal might improve performance, especially if only API requests were multiplexed and cache access remain sequential. In dfs algorithm whole traversal could be made asynchronous, but that would require synchronisation of cache and every node state (now that I think about it Guava cache and atomic references in nodes would allow for easy concurrent traversal).
+
+## Cache 
+I tried to estimate the minimal viable cache sizes for the both types of cache, but arrived at no strong conclusion. LRU is mostly intended to be used with the chronological traversal and hold commits from the 'active zone' (those that are reachable directly from commits that would be dequeued next), so its max size should depend on 'how wide' it can get. On the other hand, LFU fits the dfs algorithm if it is able to hold commits from more than one execution, so it will form a kind of 'graph skeleton' of the most visited nodes.
+I also considered possibility of repository-level cache (shared between finder instances), but that again would require to synchronize it and more careful user authorization.
+
+## Security
+Two major considerations are potential injections and user token safety. Injections (and user input sanitizing in general) should be covered by retrofit via encoding of the request template parameters. The token should also be fine as long as it doesn't get persisted or logged. 
+
+## Configuration
+System properties might not be the most popular choice, but I wanted to preserve library interfaces. However, configuration probably should have been implemented via factory parameters or through builder pattern.
+
+
+
