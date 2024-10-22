@@ -19,8 +19,6 @@ public abstract class GitHubClientBase implements GitHubClient {
     protected final @Nullable String authorisation;
     private final  @NotNull OkHttpClient client;
 
-    private boolean isShutDown = false;
-
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected GitHubClientBase(
@@ -40,7 +38,6 @@ public abstract class GitHubClientBase implements GitHubClient {
 
     @NotNull
     protected <T> T makeCall(@NotNull Call<T> call) throws IOException {
-        assert !isShutDown;
         var response = call.execute();
         if (response.isSuccessful() && response.body() != null) {
             return response.body();
@@ -55,10 +52,8 @@ public abstract class GitHubClientBase implements GitHubClient {
 
     @Override
     public void shutdown() {
-        assert !isShutDown;
         // https://github.com/square/retrofit/issues/3144
         client.dispatcher().executorService().shutdown();
         client.connectionPool().evictAll();
-        isShutDown = true;
     }
 }
