@@ -66,6 +66,7 @@
       <parameters>
         <param name="connectionSubtype" value="gitHubApp" />
         <param name="displayName" value="BuildScopedTokens" />
+        <param name="gitHubApp.allowBuildScopedTokens" value="true" />
         <param name="gitHubApp.appId" value="1294380" />
         <param name="gitHubApp.clientId" value="Iv23lip8S0MsQxQqWgjq" />
         <param name="gitHubApp.ownerUrl" value="https://github.com/das747" />

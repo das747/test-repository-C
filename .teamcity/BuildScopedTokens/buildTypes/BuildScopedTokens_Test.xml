@@ -40,26 +40,26 @@ curl -L \
           <param name="use.custom.script" value="true" />
         </parameters>
       </runner>
-      <runner id="gradle_runner" name="" type="gradle-runner">
-        <parameters>
-          <param name="teamcity.coverage.emma.include.source" value="true" />
-          <param name="teamcity.coverage.emma.instr.parameters" value="-ix -*Test*" />
-          <param name="teamcity.coverage.idea.includePatterns" value="*" />
-          <param name="teamcity.coverage.jacoco.patterns" value="+:*" />
-          <param name="teamcity.step.mode" value="default" />
-          <param name="teamcity.tool.jacoco" value="%teamcity.tool.jacoco.DEFAULT%" />
-          <param name="ui.gradleRunner.gradle.wrapper.useWrapper" value="true" />
-        </parameters>
-      </runner>
     </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="BuildScopedTokens_SettingsRoot" />
+    </vcs-settings>
     <build-extensions>
       <extension id="BUILD_EXT_13" type="build-scoped-token">
         <parameters>
           <param name="buildScopedTokenVariableName" value="env.GITHUB_TOKEN_TEST" />
           <param name="buildScopedTokensConnection" value="PROJECT_EXT_9" />
-          <param name="buildScopedTokensRepositories" value="bazik" />
+          <param name="buildScopedTokensRepositories"><![CDATA[bazik
+build-scoped-tokens]]></param>
           <param name="buildScopedTokensSettingsId" value="githubAppBuildScopedTokens" />
-          <param name="buildScopedTokensWriteAccess" value="true" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_26" type="pullRequests">
+        <parameters>
+          <param name="authenticationType" value="vcsRoot" />
+          <param name="filterAuthorRole" value="MEMBER" />
+          <param name="providerType" value="github" />
+          <param name="vcsRootId" value="BuildScopedTokens_SettingsRoot" />
         </parameters>
       </extension>
     </build-extensions>
