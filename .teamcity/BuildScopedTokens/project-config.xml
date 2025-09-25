@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="1486e433-4950-419d-9620-2fcd08836b64" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2025.3/project-config.xsd">
+  <name>Build-scoped tokens</name>
+  <parameters>
+    <param name="teamcity.internal.feature.buildScopedTokens" value="true" />
+  </parameters>
+  <project-extensions>
+    <extension id="PROJECT_EXT_10" type="OAuthProvider">
+      <parameters>
+        <param name="clientId" value="Ov23libCv4ANc2Eyrqky" />
+        <param name="defaultTokenScope" value="public_repo,repo,repo:status,write:repo_hook" />
+        <param name="displayName" value="GitHub.com (1)" />
+        <param name="gitHubUrl" value="https://github.com/" />
+        <param name="providerType" value="GitHub" />
+        <param name="secure:clientSecret" value="credentialsJSON:1be72617-a304-4bb2-9721-4fd6415baebd" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_12" type="OAuthProvider">
+      <parameters>
+        <param name="connectionSubtype" value="gitHubAppInstallation" />
+        <param name="displayName" value="BuildScopedTokens Installation" />
+        <param name="gitHubAppInstallation.allowBuildScopedTokens" value="true" />
+        <param name="gitHubAppInstallation.installationUrl" value="https://github.com/das747" />
+        <param name="gitHubAppInstallation.parentConnectionId" value="PROJECT_EXT_8" />
+        <param name="providerType" value="GitHubApp" />
+        <param name="useUniqueRedirect" value="true" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_16" type="OAuthProvider">
+      <parameters>
+        <param name="connectionSubtype" value="gitHubApp" />
+        <param name="displayName" value="TeamCity Org test" />
+        <param name="gitHubApp.appId" value="1775695" />
+        <param name="gitHubApp.clientId" value="Iv23liA16xBKIzqKsyK4" />
+        <param name="gitHubApp.ownerUrl" value="https://github.com/das747" />
+        <param name="providerType" value="GitHubApp" />
+        <param name="secure:gitHubApp.clientSecret" value="credentialsJSON:fd32d1b6-5ad8-404a-876f-a3cc708ab6ac" />
+        <param name="secure:gitHubApp.privateKey" value="credentialsJSON:2dc29dab-67f8-412d-8579-bd3924d6d441" />
+        <param name="useUniqueRedirect" value="true" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_23" type="versionedSettings">
+      <parameters>
+        <param name="buildSettings" value="PREFER_VCS" />
+        <param name="credentialsStorageType" value="credentialsJSON" />
+        <param name="enabled" value="true" />
+        <param name="ignoreChangesInDependenciesAndVcsSettings" value="false" />
+        <param name="rootId" value="BuildScopedTokens_SettingsRoot" />
+        <param name="showChanges" value="false" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_8" type="OAuthProvider">
+      <parameters>
+        <param name="connectionSubtype" value="gitHubAppApplication" />
+        <param name="displayName" value="BuildScopedTokens Application" />
+        <param name="gitHubAppApplication.appId" value="1294380" />
+        <param name="gitHubAppApplication.appOwnerUrl" value="https://github.com/das747" />
+        <param name="gitHubAppApplication.clientId" value="Iv23lip8S0MsQxQqWgjq" />
+        <param name="providerType" value="GitHubApp" />
+        <param name="secure:gitHubAppApplication.clientSecret" value="credentialsJSON:ce2b64b3-2b55-4586-919f-9c68d4667eb2" />
+        <param name="secure:gitHubAppApplication.privateKey" value="credentialsJSON:bd6ab1fd-06c2-41b8-af63-c2fd5774ce0b" />
+        <param name="useUniqueRedirect" value="true" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_9" type="OAuthProvider">
+      <parameters>
+        <param name="connectionSubtype" value="gitHubApp" />
+        <param name="displayName" value="BuildScopedTokens" />
+        <param name="gitHubApp.allowBuildScopedTokens" value="true" />
+        <param name="gitHubApp.appId" value="1294380" />
+        <param name="gitHubApp.clientId" value="Iv23lip8S0MsQxQqWgjq" />
+        <param name="gitHubApp.ownerUrl" value="https://github.com/das747" />
+        <param name="providerType" value="GitHubApp" />
+        <param name="secure:gitHubApp.clientSecret" value="credentialsJSON:d3f25105-59bf-4f6b-b75b-da03108fd818" />
+        <param name="secure:gitHubApp.privateKey" value="credentialsJSON:7e408e0a-579b-4990-95d9-6fbe4c91af1a" />
+      </parameters>
+    </extension>
+  </project-extensions>
+</project>
+

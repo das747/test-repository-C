@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcs-root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="fdadd887-ae7c-4f5a-92a7-b55a07556a2f" type="jetbrains.git" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2025.3/project-config.xsd">
+  <name>https://github.com/das747/build-scoped-tokens#refs/heads/main</name>
+  <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
+  <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
+  <param name="authMethod" value="ACCESS_TOKEN" />
+  <param name="branch" value="refs/heads/main" />
+  <param name="ignoreKnownHosts" value="true" />
+  <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="teamcity:branchSpec" value="refs/heads/*" />
+  <param name="tokenId" value="tc_token_id:CID_875489c1cccd2fe9dbeda9217058541b:-1:44aa1015-d0f1-40d6-8d74-37c3f8ac0e88" />
+  <param name="url" value="https://github.com/das747/build-scoped-tokens" />
+  <param name="useAlternates" value="AUTO" />
+  <param name="username" value="oauth2" />
+  <param name="usernameStyle" value="USERID" />
+</vcs-root>
+
