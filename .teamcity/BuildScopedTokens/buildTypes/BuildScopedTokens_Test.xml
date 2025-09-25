@@ -13,7 +13,7 @@
     <build-runners>
       <runner id="simpleRunner" name="" type="simpleRunner">
         <parameters>
-          <param name="script.content"><![CDATA[TOKEN=%env.GITHUB_TOKEN%
+          <param name="script.content"><![CDATA[TOKEN=%env.GITHUB_TOKEN_TEST%
 
 touch 1.txt
 env >> 1.txt
@@ -55,7 +55,7 @@ curl -L \
     <build-extensions>
       <extension id="BUILD_EXT_13" type="build-scoped-token">
         <parameters>
-          <param name="buildScopedTokenVariableName" value="env.GITHUB_TOKEN" />
+          <param name="buildScopedTokenVariableName" value="env.GITHUB_TOKEN_TEST" />
           <param name="buildScopedTokensConnection" value="PROJECT_EXT_9" />
           <param name="buildScopedTokensRepositories" value="bazik" />
           <param name="buildScopedTokensSettingsId" value="githubAppBuildScopedTokens" />
