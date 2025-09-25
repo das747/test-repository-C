@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="6adf522f-4e9a-4fcf-a8c3-6af024d23834" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2025.3/project-config.xsd">
+  <name>Get commit</name>
+  <description />
+  <settings>
+    <parameters>
+      <param name="commit" value="" spec="text display='prompt' validationMode='any'" />
+    </parameters>
+    <build-runners>
+      <runner id="simpleRunner" name="" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[curl -L \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $GITHUB_TOKEN" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/repos/das747/test-repo/commits/%commit%]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <build-extensions>
+      <extension id="BUILD_EXT_15" type="build-scoped-token">
+        <parameters>
+          <param name="buildScopedTokenVariableName" value="env.GITHUB_TOKEN" />
+          <param name="buildScopedTokensConnection" value="PROJECT_EXT_9" />
+          <param name="buildScopedTokensRepositories" value="test-repo" />
+          <param name="buildScopedTokensSettingsId" value="githubAppBuildScopedTokens" />
+          <param name="buildScopedTokensWriteAccess" value="false" />
+        </parameters>
+      </extension>
+    </build-extensions>
+  </settings>
+</build-type>
+

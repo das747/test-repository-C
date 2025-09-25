@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcs-root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="2173ebc8-dbb7-4cb9-8fdf-40e36a36db6c" type="jetbrains.git" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2025.3/project-config.xsd">
+  <name>Settings root</name>
+  <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
+  <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
+  <param name="authMethod" value="ACCESS_TOKEN" />
+  <param name="branch" value="main" />
+  <param name="ignoreKnownHosts" value="true" />
+  <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="tokenId" value="tc_token_id:CID_942b3e8bc7295a263767c4a08e7cd48c:-1:5cdc72fa-8c97-417b-9cb2-e91372df30b7" />
+  <param name="url" value="https://github.com/das747/test-repository-C" />
+  <param name="useAlternates" value="AUTO" />
+  <param name="username" value="oauth2" />
+  <param name="usernameStyle" value="USERID" />
+</vcs-root>
+

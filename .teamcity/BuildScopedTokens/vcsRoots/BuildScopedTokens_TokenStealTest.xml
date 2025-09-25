@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcs-root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="27b54a73-7fe9-40c6-b7f1-29d41a3f6b58" type="jetbrains.git" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2025.3/project-config.xsd">
+  <name>Token Steal Test</name>
+  <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
+  <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
+  <param name="authMethod" value="ACCESS_TOKEN" />
+  <param name="branch" value="main" />
+  <param name="ignoreKnownHosts" value="true" />
+  <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="tokenId" value="tc_token_id:CID_875489c1cccd2fe9dbeda9217058541b:-1:772ed350-f645-4aad-a71d-be984e5d0a5f" />
+  <param name="url" value="https://github.com/das747/build-scoped-tokens" />
+  <param name="useAlternates" value="AUTO" />
+  <param name="username" value="oauth2" />
+  <param name="usernameStyle" value="USERID" />
+</vcs-root>
+
