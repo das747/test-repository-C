@@ -52,6 +52,9 @@ curl -L \
         </parameters>
       </runner>
     </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="BuildScopedTokens_SettingsRoot" />
+    </vcs-settings>
     <build-extensions>
       <extension id="BUILD_EXT_13" type="build-scoped-token">
         <parameters>
