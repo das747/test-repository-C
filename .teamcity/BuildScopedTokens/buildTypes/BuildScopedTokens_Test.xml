@@ -65,7 +65,7 @@ build-scoped-tokens]]></param>
       <extension id="BUILD_EXT_17" type="commit-status-publisher">
         <parameters>
           <param name="github_authentication_type" value="vcsRoot" />
-          <param name="github_host" value="https://localhost:8080" />
+          <param name="github_host" value="http://localhost:8080" />
           <param name="publisherId" value="githubStatusPublisher" />
           <param name="vcsRootId" value="BuildScopedTokens_SettingsRoot" />
         </parameters>
