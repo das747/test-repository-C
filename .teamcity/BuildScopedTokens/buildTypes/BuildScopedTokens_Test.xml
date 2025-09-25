@@ -60,9 +60,9 @@ curl -L \
         <parameters>
           <param name="buildScopedTokenVariableName" value="env.GITHUB_TOKEN" />
           <param name="buildScopedTokensConnection" value="PROJECT_EXT_9" />
-          <param name="buildScopedTokensRepositories" value="bazik" />
+          <param name="buildScopedTokensRepositories"><![CDATA[bazik
+build-scoped-tokens]]></param>
           <param name="buildScopedTokensSettingsId" value="githubAppBuildScopedTokens" />
-          <param name="buildScopedTokensWriteAccess" value="true" />
         </parameters>
       </extension>
       <extension id="BUILD_EXT_26" type="pullRequests">
