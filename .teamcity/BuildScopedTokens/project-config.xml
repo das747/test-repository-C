@@ -72,6 +72,7 @@
         <param name="providerType" value="GitHubApp" />
         <param name="secure:gitHubApp.clientSecret" value="credentialsJSON:d3f25105-59bf-4f6b-b75b-da03108fd818" />
         <param name="secure:gitHubApp.privateKey" value="credentialsJSON:7e408e0a-579b-4990-95d9-6fbe4c91af1a" />
+        <param name="gitHubApp.allowBuildScopedTokens" value="true" />
       </parameters>
     </extension>
   </project-extensions>
